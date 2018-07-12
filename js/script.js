@@ -23,9 +23,18 @@ $(document).ready(function() {
         dataType: 'json',
 
         success: function(data, statut) {
-            console.log(data);
+            // console.log(data);
             for (departements of data["records"]) {
                 L.geoJSON(departements["fields"]["geo_shape"]).addTo(mymap);
+                $.ajax({
+                    url: 'api.openweathermap.org/data/2.5/weather?q='+["fields"]["nom_chf"]+["fields"]["code_chf"]+"APPID=daf53d19967aa5ec6034966c77cbac30",
+                    type: 'GET',
+                    success: function(meteo, statut) {
+                        console.log(meteo);
+
+                    }
+
+                });
             }
 
         }
