@@ -14,6 +14,7 @@ $(document).ready(function() {
 
 
     console.log('hello world');
+
     $.ajax({
 
         url: 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=contours-simplifies-des-departements-francais-2015&rows=120&facet=code_dept',
@@ -22,15 +23,26 @@ $(document).ready(function() {
 
         dataType: 'json',
 
-        success: function(data, statut) {
+        success: function(states, statut) {
             // console.log(data);
-            for (departements of data["records"]) {
+            for (departements of states["records"]) {
+
                 L.geoJSON(departements["fields"]["geo_shape"]).addTo(mymap);
+
+                var cities = departements["fields"]["nom_chf"];
+                //
+                // console.log(cities);
+
                 $.ajax({
-                    url: 'api.openweathermap.org/data/2.5/weather?q='+["fields"]["nom_chf"]+["fields"]["code_chf"]+"APPID=daf53d19967aa5ec6034966c77cbac30",
+
+                    url:'http://api.openweathermap.org/data/2.5/weather?q='+ cities +',fr&APPID=daf53d19967aa5ec6034966c77cbac30',
+
                     type: 'GET',
-                    success: function(meteo, statut) {
-                        console.log(meteo);
+
+                    dataType: "json",
+
+                    success: function(towns, statut) {
+                            L.marker(towns["coord"]["lon"], towns["coord"]["lat"]).addTo(mymap);
 
                     }
 
@@ -41,3 +53,7 @@ $(document).ready(function() {
 
     });
 })
+
+
+
+                     // 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=daf53d19967aa5ec6034966c77cbac30',
