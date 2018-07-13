@@ -42,7 +42,11 @@ $(document).ready(function() {
                     dataType: "json",
 
                     success: function(towns, statut) {
-                            L.marker([towns["coord"]["lat"], towns["coord"]["lon"]]).addTo(mymap);
+                            var icon = "<img src='https://openweathermap.org/img/w/" + towns['weather'][0]['icon'] + ".png' alt=''>"
+
+                            var marker = L.marker([towns["coord"]["lat"], towns["coord"]["lon"]]).addTo(mymap);
+                            marker.bindPopup(towns["name"]+","+icon).openPopup();
+
                     }
 
                 });
