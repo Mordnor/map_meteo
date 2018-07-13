@@ -42,8 +42,7 @@ $(document).ready(function() {
                     dataType: "json",
 
                     success: function(towns, statut) {
-                            L.marker(towns["coord"]["lon"], towns["coord"]["lat"]).addTo(mymap);
-
+                            L.marker([towns["coord"]["lat"], towns["coord"]["lon"]]).addTo(mymap);
                     }
 
                 });
